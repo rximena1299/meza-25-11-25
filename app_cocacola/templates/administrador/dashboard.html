@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard - Coca-Cola{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Dashboard</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <div class="btn-group me-2">
+            <span class="btn btn-sm btn-outline-secondary">Bienvenido, {{ user.username }}</span>
+        </div>
+    </div>
+</div>
+
+<!-- Estadísticas -->
+<div class="row">
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card card-cosa border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Total Clientes</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ total_clientes }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="bi bi-people fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card card-cosa border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                            Total Pedidos</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ total_pedidos }}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="bi bi-cart fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card card-cosa border-left-info shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                            Productos en Stock</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                            {{ total_refrescos|add:total_aguas|add:total_jugos|add:total_energizantes }}
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="bi bi-box-seam fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card card-cosa border-left-warning shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                            Ingresos Totales</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">$0.00</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="bi bi-currency-dollar fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Resumen por Categorías -->
+<div class="row mt-4">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <i class="bi bi-cup-straw"></i> Refrescos
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">{{ total_refrescos }}</h5>
+                <p class="card-text">Productos registrados</p>
+                <a href="{% url 'refrescos_list' %}" class="btn btn-sm btn-primary">Ver todos</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <i class="bi bi-droplet"></i> Aguas
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">{{ total_aguas }}</h5>
+                <p class="card-text">Productos registrados</p>
+                <a href="{% url 'aguas_list' %}" class="btn btn-sm btn-info">Ver todos</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <i class="bi bi-cup-fill"></i> Jugos
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">{{ total_jugos }}</h5>
+                <p class="card-text">Productos registrados</p>
+                <a href="{% url 'jugos_list' %}" class="btn btn-sm btn-success">Ver todos</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header bg-warning text-white">
+                <i class="bi bi-lightning-charge"></i> Energizantes
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">{{ total_energizantes }}</h5>
+                <p class="card-text">Productos registrados</p>
+                <a href="{% url 'energizantes_list' %}" class="btn btn-sm btn-warning">Ver todos</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Acciones Rápidas -->
+<div class="row mt-5">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Acciones Rápidas</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-2 mb-2">
+                        <a href="{% url 'cliente_create' %}" class="btn btn-outline-primary w-100">
+                            <i class="bi bi-person-plus"></i><br>Nuevo Cliente
+                        </a>
+                    </div>
+                    <div class="col-md-2 mb-2">
+                        <a href="{% url 'refresco_create' %}" class="btn btn-outline-danger w-100">
+                            <i class="bi bi-plus-circle"></i><br>Nuevo Refresco
+                        </a>
+                    </div>
+                    <div class="col-md-2 mb-2">
+                        <a href="{% url 'agua_create' %}" class="btn btn-outline-info w-100">
+                            <i class="bi bi-plus-circle"></i><br>Nueva Agua
+                        </a>
+                    </div>
+                    <div class="col-md-2 mb-2">
+                        <a href="{% url 'oferta_create' %}" class="btn btn-outline-success w-100">
+                            <i class="bi bi-percent"></i><br>Nueva Oferta
+                        </a>
+                    </div>
+                    <div class="col-md-2 mb-2">
+                        <a href="{% url 'pedidos_list' %}" class="btn btn-outline-warning w-100">
+                            <i class="bi bi-cart"></i><br>Ver Pedidos
+                        </a>
+                    </div>
+                    <div class="col-md-2 mb-2">
+                        <a href="{% url 'resenas_list' %}" class="btn btn-outline-secondary w-100">
+                            <i class="bi bi-chat"></i><br>Ver Reseñas
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

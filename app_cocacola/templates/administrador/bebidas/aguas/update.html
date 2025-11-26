@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block title %}Editar Agua - Coca-Cola{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2"><i class="bi bi-pencil"></i> Editar Agua</h1>
+    <a href="{% url 'aguas_list' %}" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i> Volver
+    </a>
+</div>
+
+<div class="card shadow">
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label">Nombre *</label>
+                        <input type="text" class="form-control" name="nombre" value="{{ agua.nombre }}" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label">Tipo *</label>
+                        <select class="form-select" name="tipo" required>
+                            <option value="NATURAL" {% if agua.tipo == 'NATURAL' %}selected{% endif %}>Natural</option>
+                            <option value="SABORIZADA" {% if agua.tipo == 'SABORIZADA' %}selected{% endif %}>Saborizada</option>
+                            <option value="MINERAL" {% if agua.tipo == 'MINERAL' %}selected{% endif %}>Mineral</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label class="form-label">Precio *</label>
+                        <input type="number" class="form-control" name="precio" value="{{ agua.precio }}" step="0.01" required>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label class="form-label">Stock *</label>
+                        <input type="number" class="form-control" name="stock" value="{{ agua.stock }}" required>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label class="form-label">Tamaño *</label>
+                        <input type="text" class="form-control" name="tamaño" value="{{ agua.tamaño }}" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Descripción *</label>
+                <textarea class="form-control" name="descripcion" rows="3" required>{{ agua.descripcion }}</textarea>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Imagen (URL)</label>
+                <input type="text" class="form-control" name="imagen" value="{{ agua.imagen }}">
+            </div>
+
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" name="activo" {% if agua.activo %}checked{% endif %}>
+                <label class="form-check-label">Producto activo</label>
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button type="submit" class="btn btn-coca">
+                    <i class="bi bi-check-lg"></i> Actualizar Agua
+                </button>
+                <a href="{% url 'aguas_list' %}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

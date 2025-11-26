@@ -1,0 +1,199 @@
+:root {
+    --coca-cola-red: #F40009;
+    --coca-cola-dark-red: #D70009;
+    --coca-cola-black: #1A1A1A;
+    --coca-cola-white: #FFFFFF;
+    --coca-cola-gray: #F5F5F5;
+    --coca-cola-dark-gray: #333333;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--coca-cola-gray);
+    color: var(--coca-cola-black);
+    line-height: 1.6;
+}
+
+/* Header y Navegación */
+.header {
+    background: linear-gradient(135deg, var(--coca-cola-red), var(--coca-cola-dark-red));
+    color: var(--coca-cola-white);
+    padding: 1rem 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.logo {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--coca-cola-white);
+    text-decoration: none;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-links a {
+    color: var(--coca-cola-white);
+    text-decoration: none;
+    font-weight: 500;
+    transition: opacity 0.3s;
+}
+
+.nav-links a:hover {
+    opacity: 0.8;
+}
+
+/* Footer */
+.footer {
+    background-color: var(--coca-cola-dark-gray);
+    color: var(--coca-cola-white);
+    padding: 2rem 0;
+    margin-top: 4rem;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    text-align: center;
+}
+
+.footer-logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+/* Tarjetas de Productos */
+.productos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.producto-card {
+    background: var(--coca-cola-white);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.producto-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+}
+
+.producto-imagen {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.producto-info {
+    padding: 1.5rem;
+}
+
+.producto-nombre {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: var(--coca-cola-dark-gray);
+}
+
+.producto-precio {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.precio-actual {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: var(--coca-cola-red);
+}
+
+.precio-original {
+    font-size: 1rem;
+    color: var(--coca-cola-dark-gray);
+    text-decoration: line-through;
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    background-color: var(--coca-cola-red);
+    color: var(--coca-cola-white);
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: var(--coca-cola-dark-red);
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+/* Sección de Ofertas */
+.ofertas-section {
+    background: linear-gradient(135deg, var(--coca-cola-red), var(--coca-cola-dark-red));
+    color: var(--coca-cola-white);
+    padding: 3rem 2rem;
+    margin: 2rem 0;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: var(--coca-cola-white);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .nav-links {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    
+    .productos-grid {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+    }
+}

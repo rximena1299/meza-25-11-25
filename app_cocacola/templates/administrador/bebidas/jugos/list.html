@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% block title %}Jugos - Coca-Cola{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2"><i class="bi bi-cup-fill"></i> Gestión de Jugos</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <a href="{% url 'jugo_create' %}" class="btn btn-coca">
+            <i class="bi bi-plus-circle"></i> Nuevo Jugo
+        </a>
+    </div>
+</div>
+
+<div class="card shadow">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Sabor</th>
+                        <th>Tipo</th>
+                        <th>Tamaño</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for jugo in jugos %}
+                    <tr>
+                        <td>{{ jugo.id }}</td>
+                        <td>{{ jugo.nombre }}</td>
+                        <td>{{ jugo.sabor }}</td>
+                        <td>
+                            {% if jugo.natural %}
+                                <span class="badge bg-success">Natural</span>
+                            {% else %}
+                                <span class="badge bg-warning">Procesado</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ jugo.tamaño }}</td>
+                        <td>${{ jugo.precio }}</td>
+                        <td>
+                            {% if jugo.stock > 10 %}
+                                <span class="badge bg-success">{{ jugo.stock }}</span>
+                            {% elif jugo.stock > 0 %}
+                                <span class="badge bg-warning">{{ jugo.stock }}</span>
+                            {% else %}
+                                <span class="badge bg-danger">{{ jugo.stock }}</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if jugo.activo %}
+                                <span class="badge bg-success">Activo</span>
+                            {% else %}
+                                <span class="badge bg-secondary">Inactivo</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div class="btn-group btn-group-sm">
+                                <a href="{% url 'jugo_update' jugo.id %}" class="btn btn-warning">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <a href="{% url 'jugo_delete' jugo.id %}" class="btn btn-danger">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="9" class="text-center text-muted py-4">
+                            <i class="bi bi-cup-fill display-4 d-block mb-2"></i>
+                            No hay jugos registrados
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

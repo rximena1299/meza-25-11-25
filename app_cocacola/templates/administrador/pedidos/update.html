@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block title %}Editar Pedido - Coca-Cola{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2"><i class="bi bi-pencil"></i> Editar Pedido #{{ pedido.id }}</h1>
+    <a href="{% url 'pedidos_list' %}" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i> Volver
+    </a>
+</div>
+
+<div class="card shadow">
+    <div class="card-body">
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <h5>Información del Cliente</h5>
+                <p>
+                    <strong>Nombre:</strong> {{ pedido.cliente.usuario.first_name }} {{ pedido.cliente.usuario.last_name }}<br>
+                    <strong>Email:</strong> {{ pedido.cliente.usuario.email }}<br>
+                    <strong>Teléfono:</strong> {{ pedido.cliente.telefono }}
+                </p>
+            </div>
+            <div class="col-md-6">
+                <h5>Información del Pedido</h5>
+                <p>
+                    <strong>Fecha:</strong> {{ pedido.fecha_pedido|date:"d/m/Y H:i" }}<br>
+                    <strong>Total:</strong> ${{ pedido.total }}<br>
+                    <strong>Método Pago:</strong> {{ pedido.metodo_pago }}
+                </p>
+            </div>
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label">Estado del Pedido *</label>
+                        <select class="form-select" name="estado" required>
+                            <option value="PENDIENTE" {% if pedido.estado == 'PENDIENTE' %}selected{% endif %}>Pendiente</option>
+                            <option value="CONFIRMADO" {% if pedido.estado == 'CONFIRMADO' %}selected{% endif %}>Confirmado</option>
+                            <option value="ENVIADO" {% if pedido.estado == 'ENVIADO' %}selected{% endif %}>Enviado</option>
+                            <option value="ENTREGADO" {% if pedido.estado == 'ENTREGADO' %}selected{% endif %}>Entregado</option>
+                            <option value="CANCELADO" {% if pedido.estado == 'CANCELADO' %}selected{% endif %}>Cancelado</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label">Método de Pago *</label>
+                        <input type="text" class="form-control" name="metodo_pago" value="{{ pedido.metodo_pago }}" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Dirección de Envío *</label>
+                <textarea class="form-control" name="direccion_envio" rows="3" required>{{ pedido.direccion_envio }}</textarea>
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button type="submit" class="btn btn-coca">
+                    <i class="bi bi-check-lg"></i> Actualizar Pedido
+                </button>
+                <a href="{% url 'pedidos_list' %}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

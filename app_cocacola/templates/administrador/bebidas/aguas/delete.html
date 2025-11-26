@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}Eliminar Agua - Coca-Cola{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2"><i class="bi bi-trash"></i> Eliminar Agua</h1>
+    <a href="{% url 'aguas_list' %}" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i> Volver
+    </a>
+</div>
+
+<div class="card shadow">
+    <div class="card-body text-center">
+        <div class="alert alert-danger">
+            <h4><i class="bi bi-exclamation-triangle"></i> ¿Está seguro que desea eliminar esta agua?</h4>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">{{ agua.nombre }}</h5>
+                <p class="card-text">
+                    <strong>Tipo:</strong> {{ agua.get_tipo_display }}<br>
+                    <strong>Tamaño:</strong> {{ agua.tamaño }}<br>
+                    <strong>Precio:</strong> ${{ agua.precio }}<br>
+                    <strong>Stock:</strong> {{ agua.stock }}<br>
+                    <strong>Registro:</strong> {{ agua.fecha_creacion|date:"d/m/Y H:i" }}
+                </p>
+            </div>
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                <button type="submit" class="btn btn-danger">
+                    <i class="bi bi-trash"></i> Sí, Eliminar Agua
+                </button>
+                <a href="{% url 'aguas_list' %}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

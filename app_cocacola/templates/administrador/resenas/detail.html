@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block title %}Detalle Reseña #{{ resena.id }} - Coca-Cola{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2"><i class="bi bi-eye"></i> Detalle Reseña #{{ resena.id }}</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <a href="{% url 'resena_update' resena.id %}" class="btn btn-warning me-2">
+            <i class="bi bi-pencil"></i> Editar
+        </a>
+        <a href="{% url 'resenas_list' %}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> Volver
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card shadow mb-4">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0"><i class="bi bi-person"></i> Información del Cliente</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Nombre:</strong> {{ resena.cliente.usuario.first_name }} {{ resena.cliente.usuario.last_name }}</p>
+                <p><strong>Email:</strong> {{ resena.cliente.usuario.email }}</p>
+                <p><strong>Teléfono:</strong> {{ resena.cliente.telefono }}</p>
+                <p><strong>Fecha Registro:</strong> {{ resena.cliente.fecha_registro|date:"d/m/Y" }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card shadow mb-4">
+            <div class="card-header bg-success text-white">
+                <h5 class="card-title mb-0"><i class="bi bi-box"></i> Información del Producto</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Tipo:</strong> 
+                    <span class="badge 
+                        {% if resena.producto_tipo == 'REFRESCO' %}bg-danger
+                        {% elif resena.producto_tipo == 'AGUA' %}bg-info
+                        {% elif resena.producto_tipo == 'JUGO' %}bg-success
+                        {% else %}bg-warning{% endif %}">
+                        {{ resena.get_producto_tipo_display }}
+                    </span>
+                </p>
+                <p><strong>ID Producto:</strong> #{{ resena.producto_id }}</p>
+                <p><strong>Calificación:</strong> 
+                    <span class="text-warning">
+                        {% for i in "12345" %}
+                            {% if forloop.counter <= resena.calificacion %}
+                                <i class="bi bi-star-fill"></i>
+                            {% else %}
+                                <i class="bi bi-star"></i>
+                            {% endif %}
+                        {% endfor %}
+                        ({{ resena.calificacion }}/5)
+                    </span>
+                </p>
+                <p><strong>Fecha Reseña:</strong> {{ resena.fecha_creacion|date:"d/m/Y H:i" }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card shadow">
+    <div class="card-header bg-info text-white">
+        <h5 class="card-title mb-0"><i class="bi bi-chat-left-text"></i> Comentario Completo</h5>
+    </div>
+    <div class="card-body">
+        <div class="border p-4 rounded bg-light">
+            <p class="mb-0">{{ resena.comentario }}</p>
+        </div>
+        
+        <div class="mt-3">
+            <strong>Estado:</strong> 
+            {% if resena.aprobada %}
+                <span class="badge bg-success">Aprobada</span>
+            {% else %}
+                <span class="badge bg-warning">Pendiente de Aprobación</span>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

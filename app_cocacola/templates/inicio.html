@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block auth_content %}
+<div class="container-fluid vh-100" style="background: linear-gradient(135deg, #F40009 0%, #1A1A1A 100%);">
+    <div class="row h-100 justify-content-center align-items-center">
+        <div class="col-md-6 text-center text-white">
+            <h1 class="display-4 mb-4">
+                <i class="bi bi-cup-straw"></i>
+                Coca-Cola
+            </h1>
+            <p class="lead mb-5">Sistema de Administración y Ventas</p>
+            
+            <div class="d-grid gap-3 d-md-flex justify-content-md-center">
+                <a href="{% url 'seleccionar_rol' %}" class="btn btn-light btn-lg px-4 me-3">
+                    <i class="bi bi-door-open"></i> Ingresar al Sistema
+                </a>
+                <a href="{% url 'registro' %}" class="btn btn-outline-light btn-lg px-4">
+                    <i class="bi bi-person-plus"></i> Registrarse
+                </a>
+            </div>
+            
+            <div class="mt-5">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5><i class="bi bi-shield-check text-success"></i> Seguro</h5>
+                        <p class="small">Sistema protegido y confiable</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h5><i class="bi bi-lightning-charge text-warning"></i> Rápido</h5>
+                        <p class="small">Navegación fluida y eficiente</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

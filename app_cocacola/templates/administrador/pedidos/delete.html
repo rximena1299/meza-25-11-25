@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}Eliminar Pedido - Coca-Cola{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2"><i class="bi bi-trash"></i> Eliminar Pedido</h1>
+    <a href="{% url 'pedidos_list' %}" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i> Volver
+    </a>
+</div>
+
+<div class="card shadow">
+    <div class="card-body text-center">
+        <div class="alert alert-danger">
+            <h4><i class="bi bi-exclamation-triangle"></i> ¿Está seguro que desea eliminar este pedido?</h4>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Pedido #{{ pedido.id }}</h5>
+                <p class="card-text">
+                    <strong>Cliente:</strong> {{ pedido.cliente.usuario.first_name }} {{ pedido.cliente.usuario.last_name }}<br>
+                    <strong>Fecha:</strong> {{ pedido.fecha_pedido|date:"d/m/Y H:i" }}<br>
+                    <strong>Total:</strong> ${{ pedido.total }}<br>
+                    <strong>Estado:</strong> 
+                    {% if pedido.estado == 'PENDIENTE' %}
+                        <span class="badge bg-warning">Pendiente</span>
+                    {% elif pedido.estado == 'CONFIRMADO' %}
+                        <span class="badge bg-info">Confirmado</span>
+                    {% elif pedido.estado == 'ENVIADO' %}
+                        <span class="badge bg-primary">Enviado</span>
+                    {% elif pedido.estado == 'ENTREGADO' %}
+                        <span class="badge bg-success">Entregado</span>
+                    {% else %}
+                        <span class="badge bg-danger">Cancelado</span>
+                    {% endif %}<br>
+                    <strong>Método Pago:</strong> {{ pedido.metodo_pago }}
+                </p>
+            </div>
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                <button type="submit" class="btn btn-danger">
+                    <i class="bi bi-trash"></i> Sí, Eliminar Pedido
+                </button>
+                <a href="{% url 'pedidos_list' %}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block title %}Detalle Pedido #{{ pedido.id }} - Coca-Cola{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2"><i class="bi bi-eye"></i> Detalle Pedido #{{ pedido.id }}</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <a href="{% url 'pedido_update' pedido.id %}" class="btn btn-warning me-2">
+            <i class="bi bi-pencil"></i> Editar
+        </a>
+        <a href="{% url 'pedidos_list' %}" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> Volver
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card shadow mb-4">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0"><i class="bi bi-person"></i> Información del Cliente</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Nombre:</strong> {{ pedido.cliente.usuario.first_name }} {{ pedido.cliente.usuario.last_name }}</p>
+                <p><strong>Email:</strong> {{ pedido.cliente.usuario.email }}</p>
+                <p><strong>Teléfono:</strong> {{ pedido.cliente.telefono }}</p>
+                <p><strong>Dirección:</strong> {{ pedido.cliente.direccion }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card shadow mb-4">
+            <div class="card-header bg-success text-white">
+                <h5 class="card-title mb-0"><i class="bi bi-receipt"></i> Información del Pedido</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Fecha:</strong> {{ pedido.fecha_pedido|date:"d/m/Y H:i" }}</p>
+                <p><strong>Estado:</strong> 
+                    {% if pedido.estado == 'PENDIENTE' %}
+                        <span class="badge bg-warning">Pendiente</span>
+                    {% elif pedido.estado == 'CONFIRMADO' %}
+                        <span class="badge bg-info">Confirmado</span>
+                    {% elif pedido.estado == 'ENVIADO' %}
+                        <span class="badge bg-primary">Enviado</span>
+                    {% elif pedido.estado == 'ENTREGADO' %}
+                        <span class="badge bg-success">Entregado</span>
+                    {% else %}
+                        <span class="badge bg-danger">Cancelado</span>
+                    {% endif %}
+                </p>
+                <p><strong>Método Pago:</strong> {{ pedido.metodo_pago }}</p>
+                <p><strong>Total:</strong> <span class="h5 text-success">${{ pedido.total }}</span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card shadow">
+    <div class="card-header bg-info text-white">
+        <h5 class="card-title mb-0"><i class="bi bi-truck"></i> Información de Envío</h5>
+    </div>
+    <div class="card-body">
+        <p><strong>Dirección de Envío:</strong></p>
+        <p class="border p-3 rounded bg-light">{{ pedido.direccion_envio }}</p>
+    </div>
+</div>
+
+<!-- En una implementación real, aquí irían los detalles de los productos del pedido -->
+<div class="card shadow mt-4">
+    <div class="card-header bg-warning text-white">
+        <h5 class="card-title mb-0"><i class="bi bi-list-check"></i> Productos del Pedido</h5>
+    </div>
+    <div class="card-body">
+        <div class="alert alert-info">
+            <i class="bi bi-info-circle"></i> 
+            En una implementación completa, aquí se mostrarían los productos específicos del pedido.
+        </div>
+        <p>Esta sección mostraría la lista de productos, cantidades y precios.</p>
+    </div>
+</div>
+{% endblock %}

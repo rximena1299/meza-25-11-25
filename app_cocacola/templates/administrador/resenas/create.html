@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% block title %}Nueva Reseña - Coca-Cola{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2"><i class="bi bi-plus-circle"></i> Nueva Reseña</h1>
+    <a href="{% url 'resenas_list' %}" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i> Volver
+    </a>
+</div>
+
+<div class="card shadow">
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label">Cliente *</label>
+                        <select class="form-select" name="cliente_id" required>
+                            <option value="">Seleccionar cliente</option>
+                            {% for cliente in clientes %}
+                            <option value="{{ cliente.id }}">
+                                {{ cliente.usuario.first_name }} {{ cliente.usuario.last_name }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label">Tipo de Producto *</label>
+                        <select class="form-select" name="producto_tipo" required>
+                            <option value="">Seleccionar tipo</option>
+                            <option value="REFRESCO">Refresco</option>
+                            <option value="AGUA">Agua</option>
+                            <option value="JUGO">Jugo</option>
+                            <option value="ENERGIZANTE">Energizante</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label">ID del Producto *</label>
+                        <input type="number" class="form-control" name="producto_id" required>
+                        <small class="text-muted">Ingrese el ID numérico del producto</small>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label">Calificación *</label>
+                        <select class="form-select" name="calificacion" required>
+                            <option value="">Seleccionar calificación</option>
+                            <option value="1">⭐ (1) Muy Malo</option>
+                            <option value="2">⭐⭐ (2) Malo</option>
+                            <option value="3">⭐⭐⭐ (3) Regular</option>
+                            <option value="4">⭐⭐⭐⭐ (4) Bueno</option>
+                            <option value="5">⭐⭐⭐⭐⭐ (5) Excelente</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Comentario *</label>
+                <textarea class="form-control" name="comentario" rows="4" placeholder="Escribe tu comentario sobre el producto..." required></textarea>
+            </div>
+
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" name="aprobada">
+                <label class="form-check-label">Aprobar reseña automáticamente</label>
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button type="submit" class="btn btn-coca">
+                    <i class="bi bi-check-lg"></i> Crear Reseña
+                </button>
+                <a href="{% url 'resenas_list' %}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

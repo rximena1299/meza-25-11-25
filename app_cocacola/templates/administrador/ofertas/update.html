@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block title %}Editar Oferta - Coca-Cola{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2"><i class="bi bi-pencil"></i> Editar Oferta</h1>
+    <a href="{% url 'ofertas_list' %}" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i> Volver
+    </a>
+</div>
+
+<div class="card shadow">
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label">Tipo de Producto *</label>
+                        <select class="form-select" name="producto_tipo" required>
+                            <option value="REFRESCO" {% if oferta.producto_tipo == 'REFRESCO' %}selected{% endif %}>Refresco</option>
+                            <option value="AGUA" {% if oferta.producto_tipo == 'AGUA' %}selected{% endif %}>Agua</option>
+                            <option value="JUGO" {% if oferta.producto_tipo == 'JUGO' %}selected{% endif %}>Jugo</option>
+                            <option value="ENERGIZANTE" {% if oferta.producto_tipo == 'ENERGIZANTE' %}selected{% endif %}>Energizante</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label">ID del Producto *</label>
+                        <input type="number" class="form-control" name="producto_id" value="{{ oferta.producto_id }}" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label class="form-label">Descuento (%) *</label>
+                        <input type="number" class="form-control" name="descuento" value="{{ oferta.descuento }}" min="1" max="100" step="0.01" required>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label class="form-label">Fecha Inicio *</label>
+                        <input type="date" class="form-control" name="fecha_inicio" value="{{ oferta.fecha_inicio|date:'Y-m-d' }}" required>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <label class="form-label">Fecha Fin *</label>
+                        <input type="date" class="form-control" name="fecha_fin" value="{{ oferta.fecha_fin|date:'Y-m-d' }}" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" name="activa" {% if oferta.activa %}checked{% endif %}>
+                <label class="form-check-label">Oferta activa</label>
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button type="submit" class="btn btn-coca">
+                    <i class="bi bi-check-lg"></i> Actualizar Oferta
+                </button>
+                <a href="{% url 'ofertas_list' %}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

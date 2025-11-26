@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block title %}Aguas - Coca-Cola{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2"><i class="bi bi-droplet"></i> Gestión de Aguas</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <a href="{% url 'agua_create' %}" class="btn btn-coca">
+            <i class="bi bi-plus-circle"></i> Nueva Agua
+        </a>
+    </div>
+</div>
+
+<div class="card shadow">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Tipo</th>
+                        <th>Tamaño</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for agua in aguas %}
+                    <tr>
+                        <td>{{ agua.id }}</td>
+                        <td>{{ agua.nombre }}</td>
+                        <td>
+                            <span class="badge bg-info">{{ agua.get_tipo_display }}</span>
+                        </td>
+                        <td>{{ agua.tamaño }}</td>
+                        <td>${{ agua.precio }}</td>
+                        <td>
+                            {% if agua.stock > 10 %}
+                                <span class="badge bg-success">{{ agua.stock }}</span>
+                            {% elif agua.stock > 0 %}
+                                <span class="badge bg-warning">{{ agua.stock }}</span>
+                            {% else %}
+                                <span class="badge bg-danger">{{ agua.stock }}</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if agua.activo %}
+                                <span class="badge bg-success">Activo</span>
+                            {% else %}
+                                <span class="badge bg-secondary">Inactivo</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div class="btn-group btn-group-sm">
+                                <a href="{% url 'agua_update' agua.id %}" class="btn btn-warning">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <a href="{% url 'agua_delete' agua.id %}" class="btn btn-danger">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="8" class="text-center text-muted py-4">
+                            <i class="bi bi-droplet display-4 d-block mb-2"></i>
+                            No hay aguas registradas
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

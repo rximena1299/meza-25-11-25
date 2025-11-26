@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}Eliminar Oferta - Coca-Cola{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2"><i class="bi bi-trash"></i> Eliminar Oferta</h1>
+    <a href="{% url 'ofertas_list' %}" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i> Volver
+    </a>
+</div>
+
+<div class="card shadow">
+    <div class="card-body text-center">
+        <div class="alert alert-danger">
+            <h4><i class="bi bi-exclamation-triangle"></i> ¿Está seguro que desea eliminar esta oferta?</h4>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Oferta #{{ oferta.id }}</h5>
+                <p class="card-text">
+                    <strong>Tipo Producto:</strong> {{ oferta.get_producto_tipo_display }}<br>
+                    <strong>ID Producto:</strong> {{ oferta.producto_id }}<br>
+                    <strong>Descuento:</strong> {{ oferta.descuento }}%<br>
+                    <strong>Fecha Inicio:</strong> {{ oferta.fecha_inicio|date:"d/m/Y" }}<br>
+                    <strong>Fecha Fin:</strong> {{ oferta.fecha_fin|date:"d/m/Y" }}<br>
+                    <strong>Estado:</strong> {% if oferta.activa %}Activa{% else %}Inactiva{% endif %}
+                </p>
+            </div>
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                <button type="submit" class="btn btn-danger">
+                    <i class="bi bi-trash"></i> Sí, Eliminar Oferta
+                </button>
+                <a href="{% url 'ofertas_list' %}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
